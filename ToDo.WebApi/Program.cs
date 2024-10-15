@@ -1,4 +1,5 @@
 using Serilog;
+using ToDo.Application.Logic.Abstractions;
 using ToDo.Infrastructure.Persistance;
 
 
@@ -37,6 +38,11 @@ namespace ToDo.WebApi
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
 
             builder.Services.AddControllers();
+
+            builder.Services.AddMediatR(c =>
+            {
+                c.RegisterServicesFromAssemblyContaining(typeof(BaseCommandHandler));
+            });
 
             var app = builder.Build();
 
