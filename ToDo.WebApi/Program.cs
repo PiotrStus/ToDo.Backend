@@ -1,4 +1,6 @@
 using Serilog;
+using ToDo.Infrastructure.Persistance;
+
 
 namespace ToDo.WebApi
 {
@@ -26,6 +28,8 @@ namespace ToDo.WebApi
                 .Enrich.FromLogContext());
 
             // Add services to the container.
+
+            builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
 
             builder.Services.AddControllers();
 

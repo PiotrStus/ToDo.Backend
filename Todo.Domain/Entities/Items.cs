@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Todo.Domain.Common;
+using ToDo.Domain.Common;
 
 namespace ToDo.Domain.Entities
 {

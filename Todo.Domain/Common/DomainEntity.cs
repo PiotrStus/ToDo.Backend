@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Todo.Domain.Common
+namespace ToDo.Domain.Common
 {
     public abstract class DomainEntity
     {
