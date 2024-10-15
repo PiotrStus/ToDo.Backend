@@ -7,7 +7,7 @@ using ToDo.Domain.Common;
 
 namespace ToDo.Domain.Entities
 {
-    public class Items : DomainEntity
+    public class Item : DomainEntity
     {
         public required string Title { get; set; }
 
@@ -15,7 +15,7 @@ namespace ToDo.Domain.Entities
 
         public required DateTimeOffset DueDate { get; set; }
 
-        public required bool IsCompleted { get; set; }
+        public bool IsCompleted { get; set; }
 
         public required DateTimeOffset CreatedAt { get; set; }
 

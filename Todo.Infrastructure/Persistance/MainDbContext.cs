@@ -16,6 +16,6 @@ namespace ToDo.Infrastructure.Persistance
 
         }
 
-        public DbSet<Items> Items {  get; set; }
+        public DbSet<Item> Items {  get; set; }
     }
 }

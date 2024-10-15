@@ -12,7 +12,7 @@ namespace ToDo.Application.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<Items> Items { get; set; }
+        DbSet<Item> Items { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
