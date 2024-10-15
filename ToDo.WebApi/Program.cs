@@ -1,6 +1,7 @@
 using Serilog;
 using ToDo.Application.Logic.Abstractions;
 using ToDo.Infrastructure.Persistance;
+using ToDo.WebApi.Middlewares;
 
 
 namespace ToDo.WebApi
@@ -48,8 +49,9 @@ namespace ToDo.WebApi
 
             // Configure the HTTP request pipeline.
 
-            app.UseAuthorization();
+            app.UseExceptionResultMiddleware();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
