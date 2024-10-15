@@ -9,7 +9,7 @@ namespace ToDo.WebApi.Controllers
     public class ItemController : BaseController
     {
 
-        public ItemController(ILogger logger, IMediator mediator) : base(logger, mediator)
+        public ItemController(ILogger<ItemController> logger, IMediator mediator) : base(logger, mediator)
         {
         }
 

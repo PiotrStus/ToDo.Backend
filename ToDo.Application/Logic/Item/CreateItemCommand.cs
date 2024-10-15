@@ -52,6 +52,8 @@ namespace ToDo.Application.Logic.Item
                     CreatedAt = utcNow
                 };
 
+                _applicationDbContext.Items.Add(item);
+
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
                 return new Result()

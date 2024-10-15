@@ -45,7 +45,26 @@ namespace ToDo.WebApi
                 c.RegisterServicesFromAssemblyContaining(typeof(BaseCommandHandler));
             });
 
+            builder.Services.AddSwaggerGen(o =>
+            {
+                o.CustomSchemaIds(x =>
+                {
+                    var name = x.FullName;
+                    if (name != null)
+                    {
+                        name = name.Replace("+", "_");
+                    }
+                    return name;
+                });
+            });
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             // Configure the HTTP request pipeline.
 
