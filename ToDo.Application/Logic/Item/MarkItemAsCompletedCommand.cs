@@ -11,13 +11,12 @@ using ToDo.Application.Logic.Abstractions;
 
 namespace ToDo.Application.Logic.Item
 {
-    public static class CreateItemCommand
+    public static class MarkItemAsCompletedCommand
     {
         public class Request : IRequest<Result>
         {
-            public required string Title { get; set; }
-            public string? Description { get; set; }
-            public required DateTimeOffset DueDate { get; set; }
+            public required int Id { get; set; }
+
         }
 
         public class Result
@@ -33,24 +32,17 @@ namespace ToDo.Application.Logic.Item
 
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
-                var itemExists = await _applicationDbContext.Items.AnyAsync(i => i.Title == request.Title && i.DueDate.Year == request.DueDate.Year && i.DueDate.Month == request.DueDate.Month && i.DueDate.Day == request.DueDate.Day);
-                if (itemExists)
+                var item = await _applicationDbContext.Items
+                    .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
+
+                if (item == null)
                 {
-                    throw new ErrorException("ItemAlreadyExists");
+                    throw new ErrorException("Item not found");
                 }
 
                 var utcNow = DateTime.UtcNow;
-
-                var item = new Domain.Entities.Item
-                {
-                    Title = request.Title,
-                    Description = request.Description,
-                    DueDate = request.DueDate,
-                    CreatedAt = utcNow
-                };
-
-                _applicationDbContext.Items.Add(item);
-
+                item.IsCompleted = true;
+                item.UpdatedAt = DateTime.UtcNow;
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
                 return new Result()

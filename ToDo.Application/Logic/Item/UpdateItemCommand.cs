@@ -11,13 +11,15 @@ using ToDo.Application.Logic.Abstractions;
 
 namespace ToDo.Application.Logic.Item
 {
-    public static class CreateItemCommand
+    public static class UpdateItemCommand
     {
         public class Request : IRequest<Result>
         {
+            public required int Id { get; set; }
             public required string Title { get; set; }
             public string? Description { get; set; }
             public required DateTimeOffset DueDate { get; set; }
+            public required bool IsCompleted { get; set; }
         }
 
         public class Result
@@ -33,23 +35,29 @@ namespace ToDo.Application.Logic.Item
 
             public async Task<Result> Handle(Request request, CancellationToken cancellationToken)
             {
-                var itemExists = await _applicationDbContext.Items.AnyAsync(i => i.Title == request.Title && i.DueDate.Year == request.DueDate.Year && i.DueDate.Month == request.DueDate.Month && i.DueDate.Day == request.DueDate.Day);
+                var item = await _applicationDbContext.Items
+                    .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
+
+                if (item == null)
+                {
+                    throw new ErrorException("Item not found");
+                }
+
+                var itemExists = await _applicationDbContext.Items
+                    .AnyAsync(i => i.Title == request.Title && i.DueDate.Year == request.DueDate.Year && i.DueDate.Month == request.DueDate.Month && i.DueDate.Day == request.DueDate.Day && i.Id != request.Id, cancellationToken);
+
                 if (itemExists)
                 {
-                    throw new ErrorException("ItemAlreadyExists");
+                    throw new ErrorException("ItemAlreadyExist");
                 }
 
                 var utcNow = DateTime.UtcNow;
 
-                var item = new Domain.Entities.Item
-                {
-                    Title = request.Title,
-                    Description = request.Description,
-                    DueDate = request.DueDate,
-                    CreatedAt = utcNow
-                };
-
-                _applicationDbContext.Items.Add(item);
+                item.Title = request.Title;
+                item.Description = request.Description;
+                item.DueDate = request.DueDate;
+                item.IsCompleted = request.IsCompleted;
+                item.UpdatedAt = DateTime.UtcNow;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

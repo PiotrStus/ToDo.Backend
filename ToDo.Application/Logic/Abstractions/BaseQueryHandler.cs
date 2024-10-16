@@ -9,7 +9,7 @@ namespace ToDo.Application.Logic.Abstractions
 {
     public class BaseQueryHandler
     {
-        private readonly IApplicationDbContext _applicationDbContext;
+        protected readonly IApplicationDbContext _applicationDbContext;
 
         public BaseQueryHandler(IApplicationDbContext applicationDbContext)
         {
