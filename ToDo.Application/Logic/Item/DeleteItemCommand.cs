@@ -36,7 +36,7 @@ namespace ToDo.Application.Logic.Item
 
                 if (model == null)
                 {
-                    throw new ErrorException("ItemNotExists");
+                    throw new ErrorException("ItemNotFound");
                 }
 
                 _applicationDbContext.Items.Remove(model);

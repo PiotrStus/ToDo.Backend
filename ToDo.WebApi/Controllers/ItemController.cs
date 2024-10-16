@@ -51,5 +51,19 @@ namespace ToDo.WebApi.Controllers
             var data = await _mediator.Send(model);
             return Ok(data);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetItemsByDate([FromQuery] GetItemsByDateQuery.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetItem([FromQuery] GetItemQuery.Request model)
+        {
+            var data = await _mediator.Send(model);
+            return Ok(data);
+        }
     }
 }

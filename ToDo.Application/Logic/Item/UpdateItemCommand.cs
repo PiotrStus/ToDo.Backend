@@ -40,7 +40,7 @@ namespace ToDo.Application.Logic.Item
 
                 if (item == null)
                 {
-                    throw new ErrorException("Item not found");
+                    throw new ErrorException("ItemNotFound");
                 }
 
                 var itemExists = await _applicationDbContext.Items
