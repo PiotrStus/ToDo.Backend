@@ -1,4 +1,5 @@
 using Serilog;
+using System.Text.Json.Serialization;
 using ToDo.Application.Logic.Abstractions;
 using ToDo.Infrastructure.Persistance;
 using ToDo.WebApi.Middlewares;
@@ -38,7 +39,9 @@ namespace ToDo.WebApi
 
             builder.Services.AddSqlDatabase(builder.Configuration.GetConnectionString("MainDbSql")!);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             builder.Services.AddMediatR(c =>
             {
