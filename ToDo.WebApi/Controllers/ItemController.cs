@@ -37,23 +37,8 @@ namespace ToDo.WebApi.Controllers
             return Ok(deleteItemResult);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> MarkItemAsCompleted([FromBody] MarkItemAsCompletedCommand.Request model)
-        {
-            var markItemResult = await _mediator.Send(model);
-
-            return Ok(markItemResult);
-        }
-
         [HttpGet]
         public async Task<ActionResult> GetAllItems([FromQuery] GetAllItemsQuery.Request model)
-        {
-            var data = await _mediator.Send(model);
-            return Ok(data);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetItemsByDate([FromQuery] GetItemsByDateQuery.Request model)
         {
             var data = await _mediator.Send(model);
             return Ok(data);
