@@ -19,7 +19,6 @@ namespace ToDo.Application.Logic.Item
             public required string Title { get; set; }
             public string? Description { get; set; }
             public required DateTimeOffset DueDate { get; set; }
-            public required bool IsCompleted { get; set; }
         }
 
         public class Result
@@ -56,7 +55,6 @@ namespace ToDo.Application.Logic.Item
                 item.Title = request.Title;
                 item.Description = request.Description;
                 item.DueDate = request.DueDate;
-                item.IsCompleted = request.IsCompleted;
                 item.UpdatedAt = DateTime.UtcNow;
 
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
